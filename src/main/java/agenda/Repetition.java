@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Repetition {
+    private final ChronoUnit myFrequency;
+    private Termination termination;
+    private final List<LocalDate> exceptions = new ArrayList<>();
+
     public ChronoUnit getFrequency() {
         return myFrequency;
     }
@@ -19,7 +23,6 @@ public class Repetition {
      * <LI>ChronoUnit.MONTHS for monthly repetitions</LI>
      * </UL>
      */
-    private final ChronoUnit myFrequency;
 
     public Repetition(ChronoUnit myFrequency) {
         this.myFrequency = myFrequency;
@@ -30,8 +33,7 @@ public class Repetition {
      * @param date un date à laquelle l'événement ne doit pas se répéter
      */
     public void addException(LocalDate date) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        exceptions.add(date);
     }
 
     /**
@@ -39,8 +41,30 @@ public class Repetition {
      * @param termination la terminaison de la répétition
      */
     public void setTermination(Termination termination) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        this.termination = termination;
 
+    }
+
+    public Termination getTermination() {
+        return termination;
+    }
+
+    public boolean isInDay(LocalDate aDay, LocalDate startDate, List<LocalDate> eventExceptions) {
+        if (termination != null && aDay.isAfter(termination.terminationDateInclusive())) {
+            return false;
+        }
+
+        if (eventExceptions.contains(aDay) || exceptions.contains(aDay)) {
+            return false;
+        }
+
+        long diff = ChronoUnit.DAYS.between(startDate, aDay);
+        boolean isRepetitionDay = diff >= 0 && diff % myFrequency.getDuration().toDays() == 0;
+
+        if (termination != null && termination.terminationDateInclusive().isEqual(aDay)) {
+            return true;
+        }
+
+        return isRepetitionDay;
     }
 }
