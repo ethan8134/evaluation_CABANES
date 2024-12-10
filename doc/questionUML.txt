@@ -1,2 +1,19 @@
 Ecrire ici votre réponse à la question UML.
 
+Premmier diagramme uml : 
+Avantages :
+  - meilleur clarté pour le code notamment avec la présence de l'héritage bien défini
+  - bonne encapsulation des différentes éléments
+  - valide la plupart des tests (pour ce que j'ai pu valider)
+
+Inconvénients :
+  - Peut devenir vite complexe si plus d'héritage et etc..
+
+
+Deuxième diagramme uml : 
+Avantages : 
+  - bonne structure centrale pour visualiser les répétitions 
+  - peut facilement évoluer grâces aux différentes classes annexes
+
+Inconvénients :
+  - plus de lien entre les classes Event, Repetition et Termination donc doit faire plus attention aux changements   
